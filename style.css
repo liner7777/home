@@ -1,0 +1,93 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #1e1e2f;
+  color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.card {
+  background: #2e2e3f;
+  padding: 20px 25px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #00b0ff;
+}
+
+.info {
+  flex: 1;
+}
+
+.user-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.username {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+#copyBtn {
+  background: #444;
+  border: none;
+  color: white;
+  padding: 5px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#copyBtn:hover {
+  background: #00b0ff;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.status-icon {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: gray; /* default */
+}
+
+/* Status colors */
+.status-online {
+  background-color: #43b581; /* green */
+}
+
+.status-idle {
+  background-color: #faa61a; /* yellow/orange */
+}
+
+.status-dnd {
+  background-color: #f04747; /* red */
+}
+
+.status-offline {
+  background-color: #747f8d; /* gray */
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Discord Activity</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="card">
+    <img
+      id="avatar"
+      src="https://via.placeholder.com/100"
+      alt="Avatar"
+      class="avatar"
+    />
+    <div class="info">
+      <div class="user-row">
+        <span id="username" class="username">Loading...</span>
+        <button id="copyBtn" title="Copy Username">📋</button>
+      </div>
+      <div id="status" class="status">
+        <span id="status-icon" class="status-icon"></span>
+        <span id="status-text"></span>
+      </div>
+      <p id="activity">Activity: —</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
