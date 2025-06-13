@@ -1,14 +1,28 @@
-body {
+/* Global styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: transparent;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: #1e1e2f;
   color: #f5f5f5;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin: 0;
 }
 
+.container {
+  display: flex;
+  gap: 100px;
+  align-items: center; /* vertical align card & spotify */
+  /* optional: add max-width or width if you want */
+}
+
+
+
+
+/* Card */
 .card {
   background: #2e2e3f;
   padding: 20px 25px;
@@ -16,7 +30,6 @@ body {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
-  gap: 20px;
   max-width: 400px;
   width: 100%;
 }
@@ -72,31 +85,37 @@ body {
   height: 14px;
   border-radius: 50%;
   display: inline-block;
-  background-color: gray; /* default */
+  background-color: gray;
 }
 
 /* Status colors */
 .status-online {
-  background-color: #43b581; /* green */
+  background-color: #43b581;
 }
 
 .status-idle {
-  background-color: #faa61a; /* yellow/orange */
+  background-color: #faa61a;
 }
 
 .status-dnd {
-  background-color: #f04747; /* red */
+  background-color: #f04747;
 }
 
 .status-offline {
-  background-color: #747f8d; /* gray */
+  background-color: #747f8d;
 }
 
+/* Spotify styles (from your last message) */
 .spotify-container {
   margin-top: 2rem;
   text-align: center;
   color: #b9bbbe;
+  background: rgba(30, 30, 47, 0.8); /* dark translucent */
+  padding: 15px 20px;
+  border-radius: 12px;
+  max-width: 400px;
 }
+
 
 .spotify-track {
   display: flex;
@@ -123,29 +142,24 @@ body {
   color: #b9bbbe;
 }
 
+.spotify-embed iframe {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 12px;
+  pointer-events: auto;
+  display: block;
+}
+
+
+
 .spotify-embed {
-  margin-top: 1rem;
+  width: 400px;      /* or whatever width you want */
+  height: 80px;      /* height for Spotify controls */
   border-radius: 12px;
   overflow: hidden;
-  width: 100%;
-  max-width: 400px;
+  margin-top: 1rem;
+  pointer-events: auto;
+  box-sizing: border-box;
+  background-color: #121212;  /* dark bg for Spotify */
 }
-
-body, html {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  height: 100vh;
-  background: #000;
-}
-
-#bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-}
-
 
