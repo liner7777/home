@@ -91,3 +91,61 @@ body {
 .status-offline {
   background-color: #747f8d; /* gray */
 }
+
+.spotify-container {
+  margin-top: 2rem;
+  text-align: center;
+  color: #b9bbbe;
+}
+
+.spotify-track {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.spotify-track img {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.spotify-track .track-name {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.spotify-track .track-artist {
+  font-size: 0.9rem;
+  color: #b9bbbe;
+}
+
+.spotify-embed {
+  margin-top: 1rem;
+  border-radius: 12px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 400px;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100vh;
+  background: #000;
+}
+
+#bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+

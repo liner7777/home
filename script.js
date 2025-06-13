@@ -1,3 +1,5 @@
+import * as THREE from 'https://unpkg.com/three@0.152.2/build/three.module.js';
+
 const userId = "861334654366908466";
 const avatar = document.getElementById("avatar");
 const username = document.getElementById("username");
@@ -94,4 +96,71 @@ socket.onmessage = (event) => {
   } else {
     activity.textContent = "No activity";
   }
+
+  const spotifyContainer = document.getElementById('spotifyContainer');
+const spotifyInfo = document.getElementById('spotifyInfo');
+
+if (presence.listening_to_spotify && presence.spotify) {
+  const { song, artist, album_art_url, track_id } = presence.spotify;
+  spotifyInfo.innerHTML = `
+    <div class="spotify-track">
+      <img src="${album_art_url}" alt="Album Art">
+      <div class="track-name">${song}</div>
+      <div class="track-artist">${artist}</div>
+      <iframe class="spotify-embed"
+        src="https://open.spotify.com/embed/track/${track_id}"
+        width="100%" height="80" frameborder="0" allowtransparency="true"
+        allow="encrypted-media"></iframe>
+    </div>
+  `;
+} else {
+  spotifyInfo.innerHTML = 'Not listening to Spotify right now.';
+}
+
 };
+
+// Basic Three.js setup
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg'), antialias: true });
+renderer.setSize(innerWidth, innerHeight);
+camera.position.z = 2;
+
+// Create a trippy animated shader material
+const geometry = new THREE.PlaneGeometry(2, 2);
+
+const material = new THREE.ShaderMaterial({
+  fragmentShader: `
+    uniform float time;
+    void main() {
+      vec2 uv = gl_FragCoord.xy / vec2(1920.0, 1080.0);
+      uv = uv * 2.0 - 1.0;
+      float r = length(uv);
+      float a = atan(uv.y, uv.x);
+      float col = 0.5 + 0.5 * sin(10.0 * r - time * 5.0);
+      gl_FragColor = vec4(vec3(col * sin(a * 3.0 + time), col * cos(a * 2.0 - time), col), 1.0);
+    }
+  `,
+  uniforms: {
+    time: { value: 0 }
+  }
+});
+
+const mesh = new THREE.Mesh(geometry, material);
+scene.add(mesh);
+
+// Animate the shader
+function animate() {
+  requestAnimationFrame(animate);
+  material.uniforms.time.value += 0.01;
+  renderer.render(scene, camera);
+}
+animate();
+
+// Handle window resizing
+window.addEventListener('resize', () => {
+  renderer.setSize(innerWidth, innerHeight);
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+});
+
