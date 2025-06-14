@@ -163,96 +163,86 @@ socket.onmessage = (event) => {
   const spotifyContainer = document.getElementById("spotifyContainer");
   const spotifyInfo = document.getElementById("spotifyInfo");
 
-  if (presence.listening_to_spotify && presence.spotify) {
-    const { song, artist, album_art_url, track_id } = presence.spotify;
+if (presence.listening_to_spotify && presence.spotify) {
+  const { song, artist, album_art_url, track_id } = presence.spotify;
+  window.updateThreeWithSpotifyArt(album_art_url);
+  spotifyInfo.innerHTML = `
+    <div class="spotify-track">
+      <img src="${album_art_url}" alt="Album Art">
+      <div class="track-name">${song}</div>
+      <div class="track-artist">${artist}</div>
+      <iframe class="spotify-embed"
+        src="https://open.spotify.com/embed/track/${track_id}"
+        width="100%" height="80" frameborder="0" allowtransparency="true"
+        allow="encrypted-media"></iframe>
+    </div>
+  `;
 
-    spotifyInfo.innerHTML = `
-      <div class="spotify-track">
-        <img src="${album_art_url}" alt="Album Art" />
-        <div class="track-name">${song}</div>
-        <div class="track-artist">${artist}</div>
-        <iframe class="spotify-embed"
-          src="https://open.spotify.com/embed/track/${track_id}"
-          width="100%" height="80" frameborder="0" allowtransparency="true"
-          allow="encrypted-media"></iframe>
-      </div>
-    `;
+  getDominantColor(album_art_url, (bgColor) => {
+    if (!bgColor) return;
 
-    getDominantColor(album_art_url, (bgColor) => {
-      if (!bgColor) return;
-
-      // Converts rgb() string to hex string
-      function rgbToHex(rgb) {
-        const result = rgb.match(/\d+/g);
-        if (!result) return "#000000";
-        return (
-          "#" +
-          result
-            .map((x) => {
-              const hex = parseInt(x).toString(16);
-              return hex.length === 1 ? "0" + hex : hex;
-            })
-            .join("")
-        );
-      }
-
-      const bgHex = rgbToHex(bgColor);
-      const black = "#000000";
-      const white = "#ffffff";
-
-      const distBlack = colorDifference(bgHex, black);
-      const distWhite = colorDifference(bgHex, white);
-
-      let textColor = distBlack > distWhite ? black : white;
-
-      if (colorDifference(bgHex, textColor) < 50) {
-        textColor = textColor === black ? white : black;
-      }
-
-      if (spotifyContainer) {
-        spotifyContainer.style.backgroundColor = bgColor;
-        spotifyContainer.style.color = textColor;
-      }
-
-      const cardBox = document.querySelector(".card");
-      if (cardBox) {
-        cardBox.style.backgroundColor = bgColor;
-        cardBox.style.color = textColor;
-      }
-if (spotifyContainer) {
-  spotifyContainer.style.backgroundColor = bgColor;
-  spotifyContainer.style.color = textColor;
-
-  // Explicitly set color for these inner text elements:
-  const trackName = spotifyContainer.querySelector(".track-name");
-  const trackArtist = spotifyContainer.querySelector(".track-artist");
-  if (trackName) trackName.style.color = textColor;
-  if (trackArtist) trackArtist.style.color = textColor;
-}
-
-    });
-  } else {
-    spotifyInfo.innerHTML = "Not listening to Spotify right now.";
-    const spotifyContainer = document.getElementById("spotifyContainer");
-    if (spotifyContainer) {
-      spotifyContainer.style.backgroundColor = "";
-      spotifyContainer.style.color = "";
+    // Converts rgb() string to hex string
+    function rgbToHex(rgb) {
+      const result = rgb.match(/\d+/g);
+      if (!result) return "#000000";
+      return (
+        "#" +
+        result
+          .map((x) => {
+            const hex = parseInt(x).toString(16);
+            return hex.length === 1 ? "0" + hex : hex;
+          })
+          .join("")
+      );
     }
+
+    const bgHex = rgbToHex(bgColor);
+    const black = "#000000";
+    const white = "#ffffff";
+
+    const distBlack = colorDifference(bgHex, black);
+    const distWhite = colorDifference(bgHex, white);
+
+    let textColor = distBlack > distWhite ? black : white;
+
+    if (colorDifference(bgHex, textColor) < 50) {
+      textColor = textColor === black ? white : black;
+    }
+
+    if (spotifyContainer) {
+      spotifyContainer.style.backgroundColor = bgColor;
+      spotifyContainer.style.color = textColor;
+
+      // Explicitly set color for these inner text elements:
+      const trackName = spotifyContainer.querySelector(".track-name");
+      const trackArtist = spotifyContainer.querySelector(".track-artist");
+      if (trackName) trackName.style.color = textColor;
+      if (trackArtist) trackArtist.style.color = textColor;
+    }
+
     const cardBox = document.querySelector(".card");
     if (cardBox) {
-      cardBox.style.backgroundColor = "";
-      cardBox.style.color = "";
+      cardBox.style.backgroundColor = bgColor;
+      cardBox.style.color = textColor;
     }
-if (spotifyContainer) {
-  spotifyContainer.style.backgroundColor = bgColor;
-  spotifyContainer.style.color = textColor;
+  });
+} else {
+  spotifyInfo.innerHTML = "Not listening to Spotify right now.";
+  if (spotifyContainer) {
+    spotifyContainer.style.backgroundColor = "";
+    spotifyContainer.style.color = "";
 
-  // Explicitly set color for these inner text elements:
-  const trackName = spotifyContainer.querySelector(".track-name");
-  const trackArtist = spotifyContainer.querySelector(".track-artist");
-  if (trackName) trackName.style.color = textColor;
-  if (trackArtist) trackArtist.style.color = textColor;
+    // Clear inner text elements colors as well
+    const trackName = spotifyContainer.querySelector(".track-name");
+    const trackArtist = spotifyContainer.querySelector(".track-artist");
+    if (trackName) trackName.style.color = "";
+    if (trackArtist) trackArtist.style.color = "";
+  }
+  const cardBox = document.querySelector(".card");
+  if (cardBox) {
+    cardBox.style.backgroundColor = "";
+    cardBox.style.color = "";
+  }
 }
 
-  }
 };
