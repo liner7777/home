@@ -8,12 +8,38 @@ const copyBtn = document.getElementById("copyBtn");
 
 let presence = null;
 
-const statusColors = {
-  online: "status-online",
-  idle: "status-idle",
-  dnd: "status-dnd",
-  offline: "status-offline",
-};
+
+function updateStatus(status) {
+  const statusIcon = document.getElementById("status-icon");
+  const statusText = document.getElementById("status-text");
+
+  const svgs = {
+    online: `
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#43b581" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="10" />
+      </svg>`,
+    idle: `
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#faa61a" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 6v6l4 2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>`,
+    dnd: `
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#f04747" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="10" />
+        <rect x="7" y="11" width="10" height="2" fill="#000"/>
+      </svg>`,
+    offline: `
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#747f8d" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="10" />
+      </svg>`
+  };
+
+  // Insert the appropriate SVG or fallback to offline
+  statusIcon.innerHTML = svgs[status] || svgs.offline;
+
+  // Set readable text
+}
+
 
 copyBtn.addEventListener("click", () => {
   if (!presence || !presence.discord_user) return;
@@ -70,18 +96,8 @@ socket.onmessage = (event) => {
   let discStatus = presence.discord_status || "offline";
 
   // Remove all status classes
-  statusIcon.className = "status-icon";
-
-  // Add the correct class
-  if (statusColors[discStatus]) {
-    statusIcon.classList.add(statusColors[discStatus]);
-  } else {
-    statusIcon.style.backgroundColor = "gray"; // fallback
-  }
 
   // Capitalize first letter for display
-  statusText.textContent =
-    discStatus.charAt(0).toUpperCase() + discStatus.slice(1);
 
   // Show activity
   if (presence.activities && presence.activities.length > 0) {
@@ -95,8 +111,10 @@ socket.onmessage = (event) => {
     activity.textContent = "No activity";
   }
 
-  const spotifyContainer = document.getElementById('spotifyContainer');
+const spotifyContainer = document.getElementById('spotifyContainer');
 const spotifyInfo = document.getElementById('spotifyInfo');
+
+updateStatus(discStatus)
 
 if (presence.listening_to_spotify && presence.spotify) {
   const { song, artist, album_art_url, track_id } = presence.spotify;

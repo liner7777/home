@@ -78,32 +78,19 @@ body, html {
   gap: 8px;
   font-weight: 600;
   margin-bottom: 10px;
+  margin-top: 8px;
 }
 
 .status-icon {
-  width: 14px;
-  height: 14px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  display: inline-block;
-  background-color: gray;
+  margin-left: 40px;
 }
+
 
 /* Status colors */
-.status-online {
-  background-color: #43b581;
-}
 
-.status-idle {
-  background-color: #faa61a;
-}
-
-.status-dnd {
-  background-color: #f04747;
-}
-
-.status-offline {
-  background-color: #747f8d;
-}
 
 /* Spotify styles (from your last message) */
 .spotify-container {
