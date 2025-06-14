@@ -118,6 +118,11 @@ socket.onopen = () => {
       },
     })
   );
+  setInterval(() => {
+    if (socket.readyState === WebSocket.OPEN) {
+        socket.send(JSON.stringify({ op: 3 }));
+    }
+}, 30000);
 };
 
 socket.onmessage = (event) => {
