@@ -273,22 +273,3 @@ if (presence.listening_to_spotify && presence.spotify) {
       cardBox.style.color = textColor;
     }
   });
-} else {
-  spotifyInfo.innerHTML = "Not listening to Spotify right now.";
-  if (spotifyContainer) {
-    spotifyContainer.style.backgroundColor = "";
-    spotifyContainer.style.color = "";
-
-    // Clear inner text elements colors as well
-    const trackName = spotifyContainer.querySelector(".track-name");
-    const trackArtist = spotifyContainer.querySelector(".track-artist");
-    if (trackName) trackName.style.color = "";
-    if (trackArtist) trackArtist.style.color = "";
-  }
-  const cardBox = document.querySelector(".card");
-  if (cardBox) {
-    cardBox.style.backgroundColor = "";
-    cardBox.style.color = "";
-  }
-}
-};
