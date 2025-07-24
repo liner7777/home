@@ -194,8 +194,7 @@ socket.onmessage = (event) => {
         <div class="spotify-track">
           <img src="${albumArt}" alt="Album Art">
           <div class="track-name">${song}</div>
-          <div class="track-artist">${artist}</div>
-          <div class="tidal-label">🎵 Listening on TIDAL</div>
+          <div class="tidal-label">TIDAL</div>
         </div>
       `;
       applyDominantColor(albumArt);
