@@ -291,5 +291,4 @@ if (presence.listening_to_spotify && presence.spotify) {
     cardBox.style.color = "";
   }
 }
-
 };
