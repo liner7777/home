@@ -168,6 +168,8 @@ socket.onmessage = (event) => {
   const spotifyContainer = document.getElementById("spotifyContainer");
   const spotifyInfo = document.getElementById("spotifyInfo");
 
+const cardBox = document.querySelector(".card");
+
 if (presence.listening_to_spotify && presence.spotify) {
   const { song, artist, album_art_url, track_id } = presence.spotify;
   window.updateThreeWithSpotifyArt(album_art_url);
@@ -182,6 +184,46 @@ if (presence.listening_to_spotify && presence.spotify) {
         allow="encrypted-media"></iframe>
     </div>
   `;
+  applyDominantColor(album_art_url);
+} else {
+  // Look for TIDAL presence (sent as a custom activity from Music Presence)
+  const tidalActivity = presence.activities?.find(act => act.name === "TIDAL");
+
+  if (tidalActivity) {
+    const { state: artist, details: song, assets } = tidalActivity;
+    const albumArt = assets?.large_image?.startsWith("mp:external/")
+      ? `https://media.discordapp.net/external/${assets.large_image.split("mp:external/")[1].split("/")[0]}/https/${assets.large_image.split("https/")[1]}`
+      : "";
+
+    spotifyInfo.innerHTML = `
+      <div class="spotify-track">
+        <img src="${albumArt}" alt="Album Art">
+        <div class="track-name">${song}</div>
+        <div class="track-artist">${artist}</div>
+        <div class="tidal-label">🎵 Listening on TIDAL</div>
+      </div>
+    `;
+
+    applyDominantColor(albumArt);
+  } else {
+    spotifyInfo.innerHTML = "Not listening to music right now.";
+    if (spotifyContainer) {
+      spotifyContainer.style.backgroundColor = "";
+      spotifyContainer.style.color = "";
+
+      const trackName = spotifyContainer.querySelector(".track-name");
+      const trackArtist = spotifyContainer.querySelector(".track-artist");
+      if (trackName) trackName.style.color = "";
+      if (trackArtist) trackArtist.style.color = "";
+    }
+
+    if (cardBox) {
+      cardBox.style.backgroundColor = "";
+      cardBox.style.color = "";
+    }
+  }
+}
+
 
   getDominantColor(album_art_url, (bgColor) => {
     if (!bgColor) return;
