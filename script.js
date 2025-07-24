@@ -199,6 +199,7 @@ socket.onmessage = (event) => {
         </div>
       `;
       applyDominantColor(albumArt);
+      window.updateThreeWithSpotifyArt?.(albumArt);
     } else {
       // No music currently playing
       spotifyInfo.innerHTML = "Not listening to music right now.";
